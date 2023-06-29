@@ -1,5 +1,7 @@
 # NBA Player App
 
+![Rasheed Wallace - Ball Dont Lie](https://media.giphy.com/media/Jm2hosNfVeNjy/giphy.gif)
+
 This application aims to provide a comprehensive list of NBA players, including their first name, last name, position, and the team they play for. It allows users to navigate through the player list and loads an additional 35 entries once they reach the end.
 
 By selecting a player from the list, users can access detailed information about the player, including their complete profile. Furthermore, the app allows users to explore the details of the team the player is associated with, along with the available information.
