@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_action">Try again</string>
+    <string name="error_title">Something went wrong\nTry again please</string>
+    <string name="error_desc">Please try again later</string>
+</resources>

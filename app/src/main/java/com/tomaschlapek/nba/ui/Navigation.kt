@@ -20,17 +20,42 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.tomaschlapek.nba.feature.player.ui.PlayerScreen
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.NavGraph
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.tomaschlapek.nba.core.model.PlayerItem
+import com.tomaschlapek.nba.feature.player.ui.BallersScreen
+import com.tomaschlapek.nba.feature.player.ui.stats.BallerStatsScreen
+import com.tomaschlapek.nba.ui.destinations.BallerDetailScreenDestination
 
+
+@RootNavGraph(start = true)
+@NavGraph
+annotation class BallersNavGraph(
+    val start: Boolean = false
+)
+
+@BallersNavGraph(start = true)
+@Destination
 @Composable
-fun MainNavigation() {
-    val navController = rememberNavController()
+fun BallersScreen(navigator: DestinationsNavigator) {
+    BallersScreen(modifier = Modifier.padding(16.dp), navigateToDetail = { baller ->
+        navigator.navigate(
+            direction = BallerDetailScreenDestination(baller = baller),
+            onlyIfResumed = true
+        )
+    })
+}
 
-    NavHost(navController = navController, startDestination = "main") {
-        composable("main") { PlayerScreen(modifier = Modifier.padding(16.dp)) }
-        // TODO: Add more destinations
-    }
+@BallersNavGraph
+@Destination
+@Composable
+fun BallerDetailScreen(navigator: DestinationsNavigator, baller: PlayerItem) {
+    BallerStatsScreen(modifier = Modifier.padding(16.dp), navigateToTeam = { /*baller ->
+        navigator.navigate(
+            direction = BallerDetailScreenDestination(baller = baller),
+            onlyIfResumed = true
+        )*/
+    })
 }

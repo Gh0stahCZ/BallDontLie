@@ -16,13 +16,10 @@
 
 package com.tomaschlapek.nba.test.app.testdi
 
-import dagger.Binds
+import com.tomaschlapek.nba.core.data.di.DataModule
 import dagger.Module
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import com.tomaschlapek.nba.core.data.PlayerRepository
-import com.tomaschlapek.nba.core.data.di.DataModule
-import com.tomaschlapek.nba.core.data.di.FakePlayerRepository
 
 @Module
 @TestInstallIn(
@@ -31,8 +28,8 @@ import com.tomaschlapek.nba.core.data.di.FakePlayerRepository
 )
 interface FakeDataModule {
 
-    @Binds
+    /*@Binds
     abstract fun bindRepository(
         fakeRepository: FakePlayerRepository
-    ): PlayerRepository
+    ): DefaultPlayerRepository*/
 }

@@ -19,10 +19,13 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
+
+    kotlin("plugin.serialization") version "1.8.21"
 }
 
 android {
-    namespace = "com.tomaschlapek.nba.core.data"
+    namespace = "com.tomaschlapek.nba.core.model"
     compileSdk = 33
 
     defaultConfig {
@@ -51,15 +54,19 @@ android {
 
 dependencies {
     implementation(project(":core-database"))
-    implementation(project(":core-network"))
-    implementation(project(":core-model"))
 
     // Arch Components
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.paging)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.okhttp.logging)
+
+    implementation(libs.kotlinx.serialization)
+
 
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)

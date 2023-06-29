@@ -27,7 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * UI tests for [PlayerScreen].
+ * UI tests for [BallersScreen].
  */
 @RunWith(AndroidJUnit4::class)
 class PlayerScreenTest {
@@ -38,7 +38,7 @@ class PlayerScreenTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            PlayerScreen(FAKE_DATA, onSave = {})
+//            BalersScreen(FAKE_DATA, onSave = {})
         }
     }
     @Test

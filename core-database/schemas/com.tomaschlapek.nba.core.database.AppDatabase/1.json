@@ -5,7 +5,7 @@
     "identityHash": "d24f48b22adfe37255da99b8773452fd",
     "entities": [
       {
-        "tableName": "Player",
+        "tableName": "PlayerEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {

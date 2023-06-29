@@ -18,12 +18,12 @@ package com.tomaschlapek.nba.test.app
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import com.tomaschlapek.nba.core.data.di.fakePlayers
+import com.tomaschlapek.nba.ui.MainActivity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
-import com.tomaschlapek.nba.core.data.di.fakePlayers
-import com.tomaschlapek.nba.ui.MainActivity
 
 @HiltAndroidTest
 class AppTest {

@@ -32,6 +32,8 @@ rootProject.name = "Ball Dont Lie"
 
 include(":app")
 include(":core-data")
+include(":core-model")
+include(":core-network")
 include(":core-database")
 include(":core-testing")
 include(":core-ui")

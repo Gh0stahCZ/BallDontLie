@@ -24,7 +24,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Entity
-data class Player(
+data class PlayerEntity(
     val name: String
 ) {
     @PrimaryKey(autoGenerate = true)
@@ -33,9 +33,9 @@ data class Player(
 
 @Dao
 interface PlayerDao {
-    @Query("SELECT * FROM player ORDER BY uid DESC LIMIT 10")
-    fun getPlayers(): Flow<List<Player>>
+    @Query("SELECT * FROM playerentity ORDER BY uid DESC LIMIT 10")
+    fun getPlayers(): Flow<List<PlayerEntity>>
 
     @Insert
-    suspend fun insertPlayer(item: Player)
+    suspend fun insertPlayer(item: PlayerEntity)
 }

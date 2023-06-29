@@ -18,34 +18,22 @@ package com.tomaschlapek.nba.feature.player.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
+import com.tomaschlapek.nba.core.model.PlayerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import com.tomaschlapek.nba.core.data.PlayerRepository
-import com.tomaschlapek.nba.feature.player.ui.PlayerUiState.Error
-import com.tomaschlapek.nba.feature.player.ui.PlayerUiState.Loading
-import com.tomaschlapek.nba.feature.player.ui.PlayerUiState.Success
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class PlayerViewModel @Inject constructor(
-    private val playerRepository: PlayerRepository
+class BallersViewModel @Inject constructor(
+    defaultPlayerRepository: DefaultPlayerRepository
 ) : ViewModel() {
 
-    val uiState: StateFlow<PlayerUiState> = playerRepository
-        .players.map<List<String>, PlayerUiState> { Success(data = it) }
-        .catch { emit(Error(it)) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Loading)
+    val currentResult: Flow<PagingData<PlayerItem>> =
+        defaultPlayerRepository.getPlayers().cachedIn(viewModelScope)
 
-    fun addPlayer(name: String) {
-        viewModelScope.launch {
-            playerRepository.add(name)
-        }
-    }
 }
 
 sealed interface PlayerUiState {

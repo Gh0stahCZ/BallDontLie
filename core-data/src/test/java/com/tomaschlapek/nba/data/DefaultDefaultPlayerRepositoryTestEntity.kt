@@ -16,6 +16,9 @@
 
 package com.tomaschlapek.nba.data
 
+import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
+import com.tomaschlapek.nba.core.database.PlayerDao
+import com.tomaschlapek.nba.core.database.PlayerEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -23,15 +26,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
-import com.tomaschlapek.nba.core.database.Player
-import com.tomaschlapek.nba.core.database.PlayerDao
 
 /**
  * Unit tests for [DefaultPlayerRepository].
  */
 @OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
-class DefaultPlayerRepositoryTest {
+class DefaultDefaultPlayerRepositoryTestEntity {
 
     @Test
     fun players_newItemSaved_itemIsReturned() = runTest {
@@ -46,13 +46,13 @@ class DefaultPlayerRepositoryTest {
 
 private class FakePlayerDao : PlayerDao {
 
-    private val data = mutableListOf<Player>()
+    private val data = mutableListOf<PlayerEntity>()
 
-    override fun getPlayers(): Flow<List<Player>> = flow {
+    override fun getPlayers(): Flow<List<PlayerEntity>> = flow {
         emit(data)
     }
 
-    override suspend fun insertPlayer(item: Player) {
+    override suspend fun insertPlayer(item: PlayerEntity) {
         data.add(0, item)
     }
 }

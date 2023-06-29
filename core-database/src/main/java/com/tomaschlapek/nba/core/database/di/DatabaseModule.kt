@@ -18,13 +18,13 @@ package com.tomaschlapek.nba.core.database.di
 
 import android.content.Context
 import androidx.room.Room
+import com.tomaschlapek.nba.core.database.AppDatabase
+import com.tomaschlapek.nba.core.database.PlayerDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import com.tomaschlapek.nba.core.database.AppDatabase
-import com.tomaschlapek.nba.core.database.PlayerDao
 import javax.inject.Singleton
 
 @Module

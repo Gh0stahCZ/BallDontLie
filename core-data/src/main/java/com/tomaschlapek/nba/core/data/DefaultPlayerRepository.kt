@@ -14,37 +14,25 @@
  * limitations under the License.
  */
 
-package com.tomaschlapek.nba.core.data.di
+package com.tomaschlapek.nba.core.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
-import com.tomaschlapek.nba.core.data.PlayerRepository
 import com.tomaschlapek.nba.core.model.PlayerItem
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.tomaschlapek.nba.core.network.ApiService
+import com.tomaschlapek.nba.core.network.Constants.NETWORK_PAGE_SIZE
+import com.tomaschlapek.nba.core.network.retrofit.PlayerDataSource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface DataModule {
-
-    @Singleton
-    @Binds
-    fun bindsPlayerRepository(
-        playerRepository: DefaultPlayerRepository
-    ): PlayerRepository
-}
-
-/*class FakePlayerRepository @Inject constructor() : PlayerRepository {
+class DefaultPlayerRepository @Inject constructor(private val apiService: ApiService) : PlayerRepository {
     override fun getPlayers(): Flow<PagingData<PlayerItem>> {
-        //TODO return flowOf(fakePlayers)
-        return flowOf{}
+        return Pager(
+            config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
+            pagingSourceFactory = {
+                PlayerDataSource(apiService)
+            }
+        ).flow
     }
-}*/
-
-val fakePlayers = listOf("One", "Two", "Three")
+}
