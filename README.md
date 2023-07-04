@@ -21,6 +21,11 @@ To get started with the NBA Player App, follow these steps:
 1. Clone this repository to your local machine.
 2. Open the project in Android Studio.
 3. Build and run the application on an emulator or physical device.
+   
+## Screenshots
+![x1](https://github.com/Gh0stahCZ/BallDontLie/assets/15926348/fba42cad-b86f-45cd-9688-24f9c186302a)
+![x2](https://github.com/Gh0stahCZ/BallDontLie/assets/15926348/1cbcb576-193b-4e3f-93cb-4c777537d3af)
+![x3](https://github.com/Gh0stahCZ/BallDontLie/assets/15926348/3543f662-c827-4843-87b0-72aaf49100f3)
 
 ## Download
 Go to the [Releases](https://github.com/Gh0stahCZ/BallDontLie/releases) to download the latest APK.
