@@ -22,6 +22,9 @@ To get started with the NBA Player App, follow these steps:
 2. Open the project in Android Studio.
 3. Build and run the application on an emulator or physical device.
 
+## Download
+Go to the [Releases](https://github.com/Gh0stahCZ/BallDontLie/releases) to download the latest APK.
+
 ## Contributing
 
 I welcome contributions to the NBA Player App. To contribute, please follow these steps:
@@ -36,3 +39,20 @@ I welcome contributions to the NBA Player App. To contribute, please follow thes
 If you have any questions or need further assistance, please feel free to reach out to us at tomas.chlapek@gmail.com.
 
 I look forward to your contributions and feedback!
+
+## License
+```xml
+Designed and developed by 2023 (Tomas Chlapek)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
