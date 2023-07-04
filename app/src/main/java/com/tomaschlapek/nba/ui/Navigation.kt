@@ -16,18 +16,19 @@
 
 package com.tomaschlapek.nba.ui
 
-import androidx.compose.foundation.layout.padding
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.NavGraph
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.tomaschlapek.nba.R
 import com.tomaschlapek.nba.core.model.PlayerItem
 import com.tomaschlapek.nba.feature.player.ui.BallersScreen
 import com.tomaschlapek.nba.feature.player.ui.stats.BallerStatsScreen
 import com.tomaschlapek.nba.ui.destinations.BallerDetailScreenDestination
+import com.tomaschlapek.nba.ui.destinations.BallersScreenDestination
 
 
 @RootNavGraph(start = true)
@@ -40,22 +41,28 @@ annotation class BallersNavGraph(
 @Destination
 @Composable
 fun BallersScreen(navigator: DestinationsNavigator) {
-    BallersScreen(modifier = Modifier.padding(16.dp), navigateToDetail = { baller ->
+    val windowWidth = LocalWindowWidthSize.current
+    BallersScreen(modifier = Modifier, navigateToDetail = { baller ->
         navigator.navigate(
             direction = BallerDetailScreenDestination(baller = baller),
             onlyIfResumed = true
         )
-    })
+    }, windowWidth = windowWidth)
 }
 
 @BallersNavGraph
 @Destination
 @Composable
 fun BallerDetailScreen(navigator: DestinationsNavigator, baller: PlayerItem) {
-    BallerStatsScreen(modifier = Modifier.padding(16.dp), navigateToTeam = { /*baller ->
-        navigator.navigate(
-            direction = BallerDetailScreenDestination(baller = baller),
-            onlyIfResumed = true
-        )*/
-    })
+    BallerStatsScreen(modifier = Modifier)
 }
+
+
+@get:StringRes
+val com.tomaschlapek.nba.ui.destinations.Destination.title
+    get(): Int {
+        return when (this) {
+            BallersScreenDestination -> R.string.ballers_screen
+            BallerDetailScreenDestination -> R.string.baller_stats_screen
+        }
+    }

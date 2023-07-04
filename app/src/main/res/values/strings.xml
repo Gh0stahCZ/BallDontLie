@@ -15,5 +15,8 @@
   -->
 
 <resources>
-    <string name="app_name">BallDontLie</string>
+    <string name="app_name">Ball Dont Lie</string>
+    <string name="ballers_screen">⛹🏽‍ Ball Don\'t Lie ⛹🏼‍♀️️</string>
+    <string name="baller_stats_screen">🏀</string>
+
 </resources>

@@ -17,17 +17,6 @@
 package com.tomaschlapek.nba.feature.player.ui.player
 
 
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
-import com.tomaschlapek.nba.feature.player.ui.PlayerUiState
-import com.tomaschlapek.nba.feature.player.ui.BallersViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Test
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

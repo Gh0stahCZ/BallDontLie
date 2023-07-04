@@ -16,17 +16,12 @@
 
 package com.tomaschlapek.nba.core.data.di
 
-import androidx.paging.PagingData
 import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
 import com.tomaschlapek.nba.core.data.PlayerRepository
-import com.tomaschlapek.nba.core.model.PlayerItem
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module

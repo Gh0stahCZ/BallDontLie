@@ -31,13 +31,8 @@ class BallersViewModel @Inject constructor(
     defaultPlayerRepository: DefaultPlayerRepository
 ) : ViewModel() {
 
-    val currentResult: Flow<PagingData<PlayerItem>> =
-        defaultPlayerRepository.getPlayers().cachedIn(viewModelScope)
+    val _currentResult: Flow<PagingData<PlayerItem>> =
+        defaultPlayerRepository.getPlayers()
+    val currentResult = _currentResult.cachedIn(viewModelScope)
 
-}
-
-sealed interface PlayerUiState {
-    object Loading : PlayerUiState
-    data class Error(val throwable: Throwable) : PlayerUiState
-    data class Success(val data: List<String>) : PlayerUiState
 }

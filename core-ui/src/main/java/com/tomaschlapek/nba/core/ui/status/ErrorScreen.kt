@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import com.tomaschlapek.nba.core.ui.BallersTheme
 import com.tomaschlapek.nba.core.ui.R
 
+/**
+ * Error screen composable
+ */
 @Composable
 fun ErrorScreen(
     modifier: Modifier = Modifier,

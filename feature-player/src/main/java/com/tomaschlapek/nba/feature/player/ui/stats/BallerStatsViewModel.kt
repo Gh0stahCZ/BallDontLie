@@ -18,13 +18,8 @@ package com.tomaschlapek.nba.feature.player.ui.stats
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
 import com.tomaschlapek.nba.core.model.PlayerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -32,8 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BallerStatsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    defaultPlayerRepository: DefaultPlayerRepository
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(BallerStatsState(savedStateHandle["baller"]))
@@ -42,7 +36,9 @@ class BallerStatsViewModel @Inject constructor(
     init {
         if (_state.value.player == null) {
             _state.update {
-                it.copy(errorText = "General error")
+                it.copy(
+                    loading = false,
+                    errorText = "General error") // TODO Move into resources
             }
         }
     }
@@ -58,10 +54,4 @@ class BallerStatsViewModel @Inject constructor(
         val loading: Boolean = false,
         val errorText: String? = null,
     )
-}
-
-sealed interface PlayerUiState {
-    object Loading : PlayerUiState
-    data class Error(val throwable: Throwable) : PlayerUiState
-    data class Success(val data: List<String>) : PlayerUiState
 }
