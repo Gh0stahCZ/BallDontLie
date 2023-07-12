@@ -16,7 +16,9 @@
 
 package com.tomaschlapek.nba.feature.player.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,16 +33,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -61,9 +66,12 @@ fun BallersScreen(
     windowWidth: WindowWidthSizeClass
 ) {
     val players = viewModel.currentResult.collectAsLazyPagingItems()
+    val hasCachedData: Boolean by viewModel.hasCachedData.collectAsStateWithLifecycle()
+
     BallersContent(
         modifier,
         players,
+        hasCachedData,
         windowWidth,
         onPlayerClick = navigateToDetail
     )
@@ -74,60 +82,97 @@ fun BallersScreen(
 private fun BallersContent(
     modifier: Modifier,
     players: LazyPagingItems<PlayerItem>,
+    hasCachedData: Boolean,
     windowWidth: WindowWidthSizeClass,
     onPlayerClick: (PlayerItem) -> Unit = {}
 ) {
 
-    when (players.loadState.refresh) {
-        LoadState.Loading -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .paint(
+                painterResource(id = R.drawable.ball1),
+                contentScale = ContentScale.FillWidth
+            )
+    ) {
 
-        is LoadState.Error -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                ErrorScreen(
-                    description = stringResource(R.string.something_went_wrong),
-                    onActionButtonClick = {
-                        players.refresh()
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(if (windowWidth == WindowWidthSizeClass.Expanded) 2 else 1),
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
+        ) {
+            items(
+                count = players.itemCount,
+                key = players.itemKey(),
+                contentType = players.itemContentType()
+            ) { index ->
+                val item = players[index]
+                item?.let {
+                    BallerCard(
+                        player = it,
+                        onPlayerClick = onPlayerClick
+                    )
+                }
+            }
+
+            val loadState = players.loadState.mediator
+            item {
+
+                /**
+                 * Initial full-screen loading.
+                 */
+                if (loadState?.refresh == LoadState.Loading) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator()
                     }
-                )
-            }
-        }
+                }
 
-        else -> {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(if (windowWidth == WindowWidthSizeClass.Expanded) 2 else 1),
-                modifier = modifier.paint(
-                    painterResource(id = R.drawable.ball1),
-                    contentScale = ContentScale.FillWidth
-                ),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
-            ) {
-                items(
-                    count = players.itemCount,
-                    key = players.itemKey(),
-                    contentType = players.itemContentType()
-                ) { index ->
-                    val item = players[index]
-                    item?.let {
-                        BallerCard(
-                            player = it,
-                            onPlayerClick = onPlayerClick
+                /**
+                 * Pagination loading appended on the bottom of the list.
+                 */
+                if (loadState?.append == LoadState.Loading) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+
+                if (loadState?.refresh is LoadState.Error || loadState?.append is LoadState.Error) {
+                    val isPaginatingError =
+                        (loadState.append is LoadState.Error) || players.itemCount > 1
+                    val error = if (loadState.append is LoadState.Error)
+                        (loadState.append as LoadState.Error).error
+                    else
+                        (loadState.refresh as LoadState.Error).error
+
+                    /**
+                     * Pagination error showed as toast.
+                     */
+                    if (isPaginatingError) {
+                        Toast.makeText(LocalContext.current, error.message, Toast.LENGTH_SHORT)
+                            .show()
+                    } else if (!hasCachedData) {
+                        /**
+                         * Global error showed as full-screen.
+                         */
+                        ErrorScreen(
+                            description = stringResource(R.string.something_went_wrong),
+                            onActionButtonClick = {
+                                players.refresh()
+                            }
                         )
                     }
                 }
+
             }
         }
     }
@@ -171,6 +216,7 @@ private fun DefaultPreview() {
             flowOf(
                 PagingData.empty<PlayerItem>()
             ).collectAsLazyPagingItems(),
+            false,
             WindowWidthSizeClass.Medium
         )
     }
@@ -184,7 +230,9 @@ private fun PortraitPreview() {
             Modifier,
             flowOf(
                 PagingData.empty<PlayerItem>()
-            ).collectAsLazyPagingItems(), WindowWidthSizeClass.Medium
+            ).collectAsLazyPagingItems(),
+            false,
+            WindowWidthSizeClass.Medium
         )
     }
 }

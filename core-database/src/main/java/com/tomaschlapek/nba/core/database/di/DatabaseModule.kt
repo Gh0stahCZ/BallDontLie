@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.room.Room
 import com.tomaschlapek.nba.core.database.AppDatabase
 import com.tomaschlapek.nba.core.database.PlayerDao
+import com.tomaschlapek.nba.core.database.RemoteKeysDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +31,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
+
     @Provides
     fun providePlayerDao(appDatabase: AppDatabase): PlayerDao {
         return appDatabase.playerDao()
+    }
+
+    @Provides
+    fun provideRemoteKeysDao(appDatabase: AppDatabase): RemoteKeysDao {
+        return appDatabase.remoteKeysDao()
     }
 
     @Provides

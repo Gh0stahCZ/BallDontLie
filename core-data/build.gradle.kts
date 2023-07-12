@@ -56,9 +56,12 @@ dependencies {
 
     // Arch Components
     implementation(libs.hilt.android)
+    implementation(libs.firebase.crashlytics.buildtools)
     kapt(libs.hilt.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     implementation(libs.paging)
 
     // Local tests: jUnit, coroutines, Android runner

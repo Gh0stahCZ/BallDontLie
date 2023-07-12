@@ -16,8 +16,12 @@
 
 package com.tomaschlapek.nba.core.data.di
 
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.RemoteMediator
+import com.tomaschlapek.nba.core.data.OfflineFirstPlayerRepository
+import com.tomaschlapek.nba.core.data.PlayerRemoteMediator
 import com.tomaschlapek.nba.core.data.PlayerRepository
+import com.tomaschlapek.nba.core.database.PlayerItemEntity
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -31,15 +35,9 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindsPlayerRepository(
-        playerRepository: DefaultPlayerRepository
+        playerRepository: OfflineFirstPlayerRepository
     ): PlayerRepository
-}
 
-/*class FakePlayerRepository @Inject constructor() : PlayerRepository {
-    override fun getPlayers(): Flow<PagingData<PlayerItem>> {
-        //TODO return flowOf(fakePlayers)
-        return flowOf{}
-    }
-}*/
+}
 
 val fakePlayers = listOf("One", "Two", "Three")

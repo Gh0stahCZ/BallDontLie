@@ -16,43 +16,32 @@
 
 package com.tomaschlapek.nba.data
 
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
-import com.tomaschlapek.nba.core.database.PlayerDao
-import com.tomaschlapek.nba.core.database.PlayerEntity
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
-import org.junit.Test
-
 /**
  * Unit tests for [DefaultPlayerRepository].
  */
-@OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
-class DefaultDefaultPlayerRepositoryTestEntity {
-
-    @Test
-    fun players_newItemSaved_itemIsReturned() = runTest {
-        val repository = DefaultPlayerRepository(FakePlayerDao())
-
-        repository.add("Repository")
-
-        assertEquals(repository.players.first().size, 1)
-    }
-
-}
-
-private class FakePlayerDao : PlayerDao {
-
-    private val data = mutableListOf<PlayerEntity>()
-
-    override fun getPlayers(): Flow<List<PlayerEntity>> = flow {
-        emit(data)
-    }
-
-    override suspend fun insertPlayer(item: PlayerEntity) {
-        data.add(0, item)
-    }
-}
+//@OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
+//class DefaultDefaultPlayerRepositoryTestEntity {
+//
+//    @Test
+//    fun players_newItemSaved_itemIsReturned() = runTest {
+//        val repository = DefaultPlayerRepository(FakePlayerDao())
+//
+//        repository.add("Repository")
+//
+//        assertEquals(repository.players.first().size, 1)
+//    }
+//
+//}
+//
+//private class FakePlayerDao : PlayerDao {
+//
+//    private val data = mutableListOf<PlayerItemEntity>()
+//
+//    override fun getPlayers(): Flow<List<PlayerItemEntity>> = flow {
+//        emit(data)
+//    }
+//
+//    override suspend fun insertPlayer(item: PlayerItemEntity) {
+//        data.add(0, item)
+//    }
+//}

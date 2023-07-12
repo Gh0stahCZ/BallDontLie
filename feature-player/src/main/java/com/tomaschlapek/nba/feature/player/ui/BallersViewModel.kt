@@ -20,18 +20,23 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.tomaschlapek.nba.core.data.DefaultPlayerRepository
+import com.tomaschlapek.nba.core.data.PlayerRepository
 import com.tomaschlapek.nba.core.model.PlayerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class BallersViewModel @Inject constructor(
-    defaultPlayerRepository: DefaultPlayerRepository
+    defaultPlayerRepository: PlayerRepository
 ) : ViewModel() {
 
-    val _currentResult: Flow<PagingData<PlayerItem>> =
+    private val _hasCachedData = defaultPlayerRepository.hasCachedData()
+    val hasCachedData = _hasCachedData.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+
+    private val _currentResult: Flow<PagingData<PlayerItem>> =
         defaultPlayerRepository.getPlayers()
     val currentResult = _currentResult.cachedIn(viewModelScope)
 

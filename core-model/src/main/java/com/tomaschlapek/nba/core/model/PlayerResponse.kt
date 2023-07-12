@@ -1,6 +1,7 @@
 package com.tomaschlapek.nba.core.model
 
 import android.os.Parcelable
+import com.tomaschlapek.nba.core.database.PlayerItemEntity
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,7 +11,7 @@ import kotlinx.serialization.Serializable
 data class PlayersResponse(
 
     @SerialName("data")
-    val data: List<PlayerItem>? = null,
+    val data: List<PlayerItem> = mutableListOf(),
 
     @SerialName("meta")
     val meta: Meta? = null
@@ -19,6 +20,9 @@ data class PlayersResponse(
 @Parcelize
 @Serializable
 data class PlayerItem(
+
+    @SerialName("id")
+    val id: Int = 0,
 
     @SerialName("weight_pounds")
     val weightPounds: Int? = null,
@@ -31,9 +35,6 @@ data class PlayerItem(
 
     @SerialName("last_name")
     val lastName: String? = null,
-
-    @SerialName("id")
-    val id: Int? = null,
 
     @SerialName("position")
     val position: String? = null,
@@ -91,3 +92,34 @@ data class Team(
     val abbreviation: String? = null
 ) : Parcelable
 
+fun PlayerItemEntity.asExternalModel() = PlayerItem(
+    id = id,
+    weightPounds = weightPounds,
+    heightFeet = heightFeet,
+    heightInches = heightInches,
+    lastName = lastName,
+    position = position,
+    firstName = firstName
+)
+
+fun PlayerItem.asEntity(page: Int) = PlayerItemEntity(
+    id = id,
+    weightPounds = weightPounds,
+    heightFeet = heightFeet,
+    heightInches = heightInches,
+    lastName = lastName,
+    position = position,
+    firstName = firstName,
+    page = page
+)
+
+fun List<PlayerItem>.asEntityList(page: Int): List<PlayerItemEntity> {
+    return map { playerItem ->
+        playerItem.asEntity(page)
+    }
+}
+fun List<PlayerItemEntity>.asExternalList(): List<PlayerItem> {
+    return map { playerEntity ->
+        playerEntity.asExternalModel()
+    }
+}

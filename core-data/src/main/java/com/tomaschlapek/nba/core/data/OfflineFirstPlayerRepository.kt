@@ -16,23 +16,39 @@
 
 package com.tomaschlapek.nba.core.data
 
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.map
+import com.tomaschlapek.nba.core.database.PlayerDao
+import com.tomaschlapek.nba.core.database.PlayerItemEntity
 import com.tomaschlapek.nba.core.model.PlayerItem
-import com.tomaschlapek.nba.core.network.ApiService
+import com.tomaschlapek.nba.core.model.asExternalModel
 import com.tomaschlapek.nba.core.network.Constants.NETWORK_PAGE_SIZE
-import com.tomaschlapek.nba.core.network.retrofit.PlayerDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DefaultPlayerRepository @Inject constructor(private val apiService: ApiService) : PlayerRepository {
+@OptIn(ExperimentalPagingApi::class)
+class OfflineFirstPlayerRepository @Inject constructor(private val playerDao: PlayerDao, private val playerRemoteMediator: PlayerRemoteMediator) :
+    PlayerRepository {
     override fun getPlayers(): Flow<PagingData<PlayerItem>> {
         return Pager(
-            config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+            ),
             pagingSourceFactory = {
-                PlayerDataSource(apiService)
-            }
-        ).flow
+                playerDao.pagingSource()
+            },
+            remoteMediator = playerRemoteMediator
+        ).flow.map { data ->
+            data.map { it.asExternalModel() }
+        }
+    }
+    override fun hasCachedData(): Flow<Boolean> {
+        return playerDao.hasAnyPlayer()
     }
 }
