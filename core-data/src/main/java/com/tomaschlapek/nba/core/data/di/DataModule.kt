@@ -21,6 +21,8 @@ import androidx.paging.RemoteMediator
 import com.tomaschlapek.nba.core.data.OfflineFirstPlayerRepository
 import com.tomaschlapek.nba.core.data.PlayerRemoteMediator
 import com.tomaschlapek.nba.core.data.PlayerRepository
+import com.tomaschlapek.nba.core.data.util.ConnectivityManagerNetworkMonitor
+import com.tomaschlapek.nba.core.data.util.NetworkMonitor
 import com.tomaschlapek.nba.core.database.PlayerItemEntity
 import dagger.Binds
 import dagger.Module
@@ -37,6 +39,11 @@ interface DataModule {
     fun bindsPlayerRepository(
         playerRepository: OfflineFirstPlayerRepository
     ): PlayerRepository
+
+    @Binds
+    fun bindsNetworkMonitor(
+        networkMonitor: ConnectivityManagerNetworkMonitor,
+    ): NetworkMonitor
 
 }
 

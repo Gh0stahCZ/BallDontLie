@@ -16,21 +16,26 @@
 
 package com.tomaschlapek.nba.feature.player.ui
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.tomaschlapek.nba.core.data.PlayerRepository
+import com.tomaschlapek.nba.core.data.util.NetworkMonitor
 import com.tomaschlapek.nba.core.model.PlayerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class BallersViewModel @Inject constructor(
-    defaultPlayerRepository: PlayerRepository
+    defaultPlayerRepository: PlayerRepository,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
 
     private val _hasCachedData = defaultPlayerRepository.hasCachedData()
@@ -39,5 +44,13 @@ class BallersViewModel @Inject constructor(
     private val _currentResult: Flow<PagingData<PlayerItem>> =
         defaultPlayerRepository.getPlayers()
     val currentResult = _currentResult.cachedIn(viewModelScope)
+
+    val isOffline = networkMonitor.isOnline
+        .map(Boolean::not)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = false,
+        )
 
 }

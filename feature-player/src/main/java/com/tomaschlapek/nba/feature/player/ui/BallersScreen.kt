@@ -29,11 +29,15 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -65,8 +69,17 @@ fun BallersScreen(
     navigateToDetail: (PlayerItem) -> Unit = {},
     windowWidth: WindowWidthSizeClass
 ) {
+    val context = LocalContext.current
     val players = viewModel.currentResult.collectAsLazyPagingItems()
     val hasCachedData: Boolean by viewModel.hasCachedData.collectAsStateWithLifecycle()
+    val isOffline by viewModel.isOffline.collectAsStateWithLifecycle()
+
+    val notConnectedMessage = stringResource(R.string.not_connected)
+    LaunchedEffect(isOffline) {
+        if (isOffline) {
+            Toast.makeText(context, notConnectedMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     BallersContent(
         modifier,
