@@ -12,7 +12,7 @@ By selecting a player from the list, users can access detailed information about
 - Follows clean code principles to ensure maintainability and readability.
 - Utilizes Retrofit for seamless network communication and data retrieval.
 - Incorporates the Android Jetpack Compose framework for building the user interface.
-- Efficiently handles image processing using Glide library.
+- Utilize pagination and caching paginated data
 
 ## Getting Started
 
