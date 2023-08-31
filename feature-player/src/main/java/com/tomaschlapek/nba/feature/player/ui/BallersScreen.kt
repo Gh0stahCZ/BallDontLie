@@ -16,6 +16,7 @@
 
 package com.tomaschlapek.nba.feature.player.ui
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -171,7 +172,8 @@ private fun BallersContent(
                      * Pagination error showed as toast.
                      */
                     if (isPaginatingError) {
-                        Toast.makeText(LocalContext.current, error.message, Toast.LENGTH_SHORT)
+                        Log.e("BallersScreen", "Pagination Error: ${error.message}")
+                        Toast.makeText(LocalContext.current, stringResource(R.string.something_went_wrong), Toast.LENGTH_SHORT)
                             .show()
                     } else if (!hasCachedData) {
                         /**
