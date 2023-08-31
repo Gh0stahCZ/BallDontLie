@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "05f374c3f97e591d55a39974474c5dd5",
+    "identityHash": "7b2cadb2c3a12789b6952dc3e3d4d697",
     "entities": [
       {
         "tableName": "playerentity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `weight_pounds` INTEGER, `height_feet` INTEGER, `height_inches` INTEGER, `last_name` TEXT, `position` TEXT, `first_name` TEXT, `page` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `weight_pounds` INTEGER, `height_feet` INTEGER, `height_inches` INTEGER, `last_name` TEXT, `position` TEXT, `first_name` TEXT, `page` INTEGER NOT NULL, `team_division` TEXT, `team_conference` TEXT, `team_fullName` TEXT, `team_city` TEXT, `team_name` TEXT, `team_id` INTEGER, `team_abbreviation` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -55,6 +55,48 @@
             "columnName": "page",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "team.division",
+            "columnName": "team_division",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.conference",
+            "columnName": "team_conference",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.fullName",
+            "columnName": "team_fullName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.city",
+            "columnName": "team_city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.name",
+            "columnName": "team_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.id",
+            "columnName": "team_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "team.abbreviation",
+            "columnName": "team_abbreviation",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -114,7 +156,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '05f374c3f97e591d55a39974474c5dd5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7b2cadb2c3a12789b6952dc3e3d4d697')"
     ]
   }
 }

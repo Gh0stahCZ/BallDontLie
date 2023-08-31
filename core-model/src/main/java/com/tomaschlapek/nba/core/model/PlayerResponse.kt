@@ -2,6 +2,7 @@ package com.tomaschlapek.nba.core.model
 
 import android.os.Parcelable
 import com.tomaschlapek.nba.core.database.PlayerItemEntity
+import com.tomaschlapek.nba.core.database.TeamEntity
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -99,7 +100,8 @@ fun PlayerItemEntity.asExternalModel() = PlayerItem(
     heightInches = heightInches,
     lastName = lastName,
     position = position,
-    firstName = firstName
+    firstName = firstName,
+    team = team?.asExternalModel()
 )
 
 fun PlayerItem.asEntity(page: Int) = PlayerItemEntity(
@@ -110,7 +112,28 @@ fun PlayerItem.asEntity(page: Int) = PlayerItemEntity(
     lastName = lastName,
     position = position,
     firstName = firstName,
-    page = page
+    team = team?.asEntity(),
+    page = page,
+)
+
+fun Team.asEntity() = TeamEntity(
+    id = id,
+    abbreviation = abbreviation,
+    city = city,
+    conference = conference,
+    division = division,
+    fullName = fullName,
+    name = name
+)
+
+fun TeamEntity.asExternalModel() = Team(
+    id = id,
+    abbreviation = abbreviation,
+    city = city,
+    conference = conference,
+    division = division,
+    fullName = fullName,
+    name = name
 )
 
 fun List<PlayerItem>.asEntityList(page: Int): List<PlayerItemEntity> {

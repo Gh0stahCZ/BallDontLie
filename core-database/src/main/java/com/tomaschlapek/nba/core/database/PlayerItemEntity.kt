@@ -16,9 +16,11 @@
 
 package com.tomaschlapek.nba.core.database
 
+import android.os.Parcelable
 import androidx.paging.PagingSource
 import androidx.room.ColumnInfo
 import androidx.room.Dao
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -57,9 +59,37 @@ data class PlayerItemEntity(
     @ColumnInfo(name = "first_name")
     val firstName: String? = null,
 
+    @Embedded
+    var team: TeamEntity? = null,
+
     @ColumnInfo(name = "page")
     var page: Int
 )
+
+data class TeamEntity(
+
+    @ColumnInfo(name = "team_division")
+    val division: String? = null,
+
+    @ColumnInfo(name = "team_conference")
+    val conference: String? = null,
+
+    @ColumnInfo(name = "team_fullName")
+    val fullName: String? = null,
+
+    @ColumnInfo(name = "team_city")
+    val city: String? = null,
+
+    @ColumnInfo(name = "team_name")
+    val name: String? = null,
+
+    @ColumnInfo(name = "team_id")
+    val id: Int? = null,
+
+    @ColumnInfo(name = "team_abbreviation")
+    val abbreviation: String? = null
+)
+
 
 @Dao
 interface PlayerDao {
