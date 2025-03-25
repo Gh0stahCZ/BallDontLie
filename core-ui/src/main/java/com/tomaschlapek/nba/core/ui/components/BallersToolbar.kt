@@ -7,6 +7,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,7 +25,12 @@ import com.tomaschlapek.nba.core.ui.BallersTheme
 fun BallersToolbar(
     @StringRes titleRes: Int?,
     modifier: Modifier = Modifier,
-    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(),
+    colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        titleContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    ),
     canPop: Boolean = false,
     onNavigationClick: () -> Unit = { /* Empty */ },
 ) {

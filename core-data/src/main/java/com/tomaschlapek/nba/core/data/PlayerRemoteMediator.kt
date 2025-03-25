@@ -1,5 +1,6 @@
 package com.tomaschlapek.nba.core.data
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -57,6 +58,8 @@ class PlayerRemoteMediator @Inject constructor(
         loadType: LoadType,
         state: PagingState<Int, PlayerItemEntity>
     ): MediatorResult {
+        Log.d("TAG", "load | $loadType")
+
         try {
             val page = when (loadType) {
                 LoadType.REFRESH -> {
@@ -106,8 +109,10 @@ class PlayerRemoteMediator @Inject constructor(
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (e: Exception) {
+            Log.e("TAG", "Error loading players", e)
             return MediatorResult.Error(e)
         } catch (e: HttpException) {
+            Log.e("TAG", "Error loading players", e)
             return MediatorResult.Error(e)
         }
     }

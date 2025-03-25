@@ -16,6 +16,7 @@
 
 package com.tomaschlapek.nba.core.data.di
 
+import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.tomaschlapek.nba.core.network.ApiService
 import com.tomaschlapek.nba.core.network.BuildConfig
@@ -46,13 +47,20 @@ object NetworkModule {
     @Provides
     @Singleton
     fun okHttpCallFactory(): Call.Factory = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val original = chain.request()
+            val request = original.newBuilder()
+                .header("Authorization", "0f846bf4-3d9c-426a-8ee9-f82c0486a878")
+                .method(original.method, original.body)
+                .build()
+            chain.proceed(request)
+        }
         .addInterceptor(
-            HttpLoggingInterceptor()
-                .apply {
-                    if (BuildConfig.DEBUG) {
-                        setLevel(HttpLoggingInterceptor.Level.BODY)
-                    }
-                },
+            HttpLoggingInterceptor { message ->
+                Log.d("TAG", "Network: $message")
+            }.apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            },
         )
         .build()
 

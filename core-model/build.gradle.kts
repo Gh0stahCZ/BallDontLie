@@ -20,13 +20,12 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-
-    kotlin("plugin.serialization") version "1.8.21"
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.tomaschlapek.nba.core.model"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21

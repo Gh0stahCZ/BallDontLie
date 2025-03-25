@@ -1,29 +1,29 @@
 [versions]
-androidGradlePlugin = "8.0.1"
-androidxActivity = "1.7.1"
-androidxComposeBom = "2023.06.01"
-androidxComposeCompiler = "1.4.6"
-composeDestinations = "1.8.42-beta"
-androidxCore = "1.10.1"
-androidxHilt = "1.0.0"
-androidxLifecycle = "2.6.1"
-androidxNavigation = "2.5.3"
-androidxRoom = "2.5.1"
+androidGradlePlugin = "8.2.2"
+androidxActivity = "1.8.2"
+androidxComposeBom = "2025.03.00"
+androidxComposeCompiler = "1.5.8"
+composeDestinations = "1.9.55"
+androidxCore = "1.12.0"
+androidxHilt = "1.1.0"
+androidxLifecycle = "2.7.0"
+androidxNavigation = "2.7.7"
+androidxRoom = "2.6.1"
 androidxTestCore = "1.5.0"
 androidxTestExt = "1.1.5"
 androidxTestRunner = "1.5.2"
-coroutines = "1.6.4"
-hilt = "2.46"
+coroutines = "1.7.3"
+hilt = "2.50"
 junit = "4.13.2"
-kotlin = "1.8.20"
-ksp = "1.8.20-1.0.11"
-okhttp = "4.10.0"
+kotlin = "1.9.22"
+ksp = "1.9.22-1.0.17"
+okhttp = "4.12.0"
 retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
-kotlinxSerializationJson = "1.5.1"
+kotlinxSerializationJson = "c1.6.2"
 kotlinSerialization = "0.4.1"
-paging = "3.1.1"
-paging-compose = "1.0.0-alpha20"
+paging = "3.2.1"
+paging-compose = "3.2.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
@@ -76,4 +76,5 @@ hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}

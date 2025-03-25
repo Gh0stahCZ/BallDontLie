@@ -1,5 +1,6 @@
 package com.tomaschlapek.nba.core.network.retrofit
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.tomaschlapek.nba.core.model.PlayerItem
@@ -18,6 +19,7 @@ class PlayerDataSource @Inject constructor(
     override suspend fun load(params: PagingSource.LoadParams<Int>): PagingSource.LoadResult<Int, PlayerItem> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
+            Log.d("TAG", "PlayerDataSource")
             val response = networkApi.getPlayers(params.loadSize, page)
             val players = mutableListOf<PlayerItem>()
             players.addAll(response.data as MutableList<PlayerItem>)

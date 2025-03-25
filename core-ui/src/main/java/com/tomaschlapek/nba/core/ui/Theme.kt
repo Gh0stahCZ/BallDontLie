@@ -29,7 +29,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 
 private val LightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -99,7 +99,7 @@ private val DarkColorScheme = darkColorScheme(
 fun BallersTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -113,8 +113,9 @@ fun BallersTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.surfaceVariant.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

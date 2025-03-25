@@ -25,7 +25,7 @@ plugins {
 
 android {
     namespace = "com.tomaschlapek.nba.core.network"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
@@ -36,10 +36,10 @@ android {
 
     buildTypes {
         val debug by getting {
-            buildConfigField("String", "API_BASE_URL", "\"https://balldontlie.io/api/v1/\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.balldontlie.io/v1/\"")
         }
         val release by getting {
-            buildConfigField("String", "API_BASE_URL", "\"https://balldontlie.io/api/v1/\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://api.balldontlie.io/v1/\"")
         }
     }
 

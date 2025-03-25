@@ -167,7 +167,7 @@ private fun BallerStatContent(player: PlayerItem) {
         ModalBottomSheet(
             onDismissRequest = { openBottomSheet = false },
             sheetState = bottomSheetState,
-            windowInsets = WindowInsets(bottom = LocalContext.current.navigationBarHeight),
+            contentWindowInsets = { WindowInsets(bottom = LocalContext.current.navigationBarHeight) },
 
             ) {
             ModalBottomSheetContent(player)

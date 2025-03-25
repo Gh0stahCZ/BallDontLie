@@ -16,14 +16,13 @@
 
 package com.tomaschlapek.nba.core.data
 
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.tomaschlapek.nba.core.database.PlayerDao
-import com.tomaschlapek.nba.core.database.PlayerItemEntity
 import com.tomaschlapek.nba.core.model.PlayerItem
 import com.tomaschlapek.nba.core.model.asExternalModel
 import com.tomaschlapek.nba.core.network.Constants.NETWORK_PAGE_SIZE
@@ -35,6 +34,7 @@ import javax.inject.Inject
 class OfflineFirstPlayerRepository @Inject constructor(private val playerDao: PlayerDao, private val playerRemoteMediator: PlayerRemoteMediator) :
     PlayerRepository {
     override fun getPlayers(): Flow<PagingData<PlayerItem>> {
+        Log.d("TAG", "getPlayers")
         return Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
