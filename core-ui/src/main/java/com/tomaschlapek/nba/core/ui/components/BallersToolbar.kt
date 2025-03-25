@@ -42,9 +42,7 @@ fun BallersToolbar(
         },
         navigationIcon = {
             if (canPop) {
-                IconButton(onClick = {
-                    onNavigationClick()
-                }) {
+                IconButton(onClick = onNavigationClick) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back"
